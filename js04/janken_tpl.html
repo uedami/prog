@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<title>じゃんけん</title>
+</head>
+<body>
+
+<header>
+  <h1>じゃんけん</h1>
+</header>
+
+<main>
+  <ul>
+    <li id="gu_btn">グー</li>
+    <li id="cho_btn">チョキ</li>
+    <li id="par_btn">パー</li>
+  </ul>
+  <div>コンピュータの出した手は？「<span id="pc_hands">なに？</span>」</div>
+  <div id="judgment">勝ち</div>
+</main>
+
+<footer></footer>
+<script>
+  
+//id名、クリックイベント3個、乱数、if文、表示
+
+$("#gu_btn").on("click",function(){
+  const num = Math.ceil(Math.random()*3);
+  if(num == 1){
+    $("#pc_hands").html("グー");
+    $("#judgment").html("引き分け")
+  }
+  if(num == 2){
+    $("#pc_hands").html("チョキ");
+    $("#judgment").html("あなたの勝ち")
+  }
+  if(num == 3){
+    $("#pc_hands").html("パー");
+    $("#judgment").html("あなたの負け")
+  }
+});
+
+$("#cho_btn").on("click",function(){
+  $("#cho_btn").css("background","#ba0000");
+  const num = Math.ceil(Math.random()*3);
+  if(num == 1){
+    $("#pc_hands").html("グー");
+    $("#judgment").html("あなたの負け")
+  }
+  if(num == 2){
+    $("#pc_hands").html("チョキ");
+    $("#judgment").html("引き分け")
+  }
+  if(num == 3){
+    $("#pc_hands").html("パー");
+    $("#judgment").html("あなたの勝ち")
+  }
+});
+
+$("#par_btn").on("click",function(){
+  const num = Math.ceil(Math.random()*3);
+  if(num == 1){
+    $("#pc_hands").html("グー");
+    $("#judgment").html("あなたの勝ち")
+  }
+  if(num == 2){
+    $("#pc_hands").html("チョキ");
+    $("#judgment").html("あなたの負け")
+  }
+  if(num == 3){
+    $("#pc_hands").html("パー");
+    $("#judgment").html("引き分け")
+  }
+});
+
+    
+    
+    
+    
+    
+    
+
+</script>
+</body>
+</html>
