@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <header>
+      <div class="header_inner">
+          <div class="header_logo">
+            <a class="logo2" href="">
+              <img src="img/playland2.png" alt="">
+            </a>
+          </div>
+
+          <nav class="header_nav">
+            <div class="header_nav_1">
+              <ul class="list_nav_1">
+                <li><a href="">
+                </a></li>
+                <li>
+                  <form id="form">
+                    <select name="select">
+                      <option value="canvas.html">日本語</option>
+                      <option value="">English</option>
+                    </select>
+                  </form>
+                </li>
+              </ul>
+            </div>
+
+            <div class="header_nav_2">
+              <ul class="list_nav_2">
+                <li><a href="index_en.html">TOP</a></li>
+                <li><a href="canvas_en.html">CANVAS</a></li>
+                <li><a href="game_en.html">GAME</a></li>
+                <li><a href="mail_en.html">✉️ MAIL</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+    </header>
+
+  <main class="game_main">
+    <p>Just count a minute♪</p>
+    <div id="display">00:00:00</div>
+    <div id="btnko2">
+      <button id="game_btn">START</button>
+      <button id="reset">RESET</button>
+    </div>
+    <p>Have a good sleep</p>
+      
+
+  </main>
+
+  <footer>
+      <copyright>
+          <div class="copyright"> Copyright &copy; 2020 weda.web. All rights reserved.
+          </div>
+        </copyright>
+
+    </footer>
+  <script src="script.js"></script>
+  <script>
+          let display = document.getElementById("display");
+      let game_btn = document.getElementById("game_btn");
+      let reset = document.getElementById("reset");
+
+      let hours = 0;
+      let minutes = 0;
+      let seconds = 0;
+
+      let newHours = 0;
+      let newMinutes = 0;
+      let newSeconds = 0;
+
+      let state = "stop";
+      let interval;
+
+      function stopWatch(){
+        seconds++;
+        if(seconds / 60 == 1){
+          minutes++;
+          seconds = 0;
+          if(minutes / 60 == 1){
+            hours++;
+            minutes = 0;
+          }
+        }
+        if(seconds < 10){
+          newSeconds = "0"+ seconds;
+        }else{
+          newSeconds = seconds;
+        }
+        if(minutes < 10){
+          newMinutes = "0"+ minutes;
+        }else{
+          newMinutes = minutes;
+        }
+        if(hours < 10){
+          newHours = "0"+ hours;
+        }else{
+          newHours = hours;
+        }
+        
+
+
+        display.innerHTML = newHours + ":" + newMinutes + ":" + newSeconds;
+      }
+
+      game_btn.addEventListener("click",function(){
+        if(state == "stop"){
+          interval = setInterval(stopWatch,1000);
+        game_btn.innerHTML = "STOP";
+        state = "start";
+
+        }else{
+          clearInterval(interval);
+          game_btn.innerHTML = "START";
+          state = "stop";
+        }
+      })
+
+      reset.addEventListener("click",function(){
+        clearInterval(interval);
+        game_btn.innerHTML = "START";
+          state = "stop";
+        display.innerHTML = "00:00:00";
+        
+
+      })
+
+      //setInterval(stopWatch,100);
+
+        
+
+  </script>
+</body>
+
+</html>

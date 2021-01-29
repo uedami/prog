@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>canvas_base.html</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header>
+      <div class="header_inner">
+          <div class="header_logo">
+            <a class="logo2" href="">
+              <img src="img/playland2.png" alt="">
+            </a>
+          </div>
+
+          <nav class="header_nav">
+            <div class="header_nav_1">
+              <ul class="list_nav_1">
+                <li><a href="">
+                </a></li>
+                <li>
+                  <form id="form">
+                    <select name="select">
+                      <option value="canvas.html">日本語</option>
+                      <option value="">English</option>
+                    </select>
+                  </form>
+                </li>
+              </ul>
+            </div>
+
+            <div class="header_nav_2">
+              <ul class="list_nav_2">
+                <li><a href="index_en.html">TOP</a></li>
+                <li><a href="canvas_en.html">CANVAS</a></li>
+                <li><a href="game_en.html">GAME</a></li>
+                <li><a href="mail_en.html">✉️ mail</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+    </header>
+
+    <main class="canvas_main">
+    <section>
+        <h1>canvas</h1>
+        <nav>
+            <!-- 線の色を変更するカラーピッカーHTML要素[id="color"] -->
+          <ul>
+            <li>background：<input type="color" id="iro"></li>
+            <li>pen's color：<input type="color" id="col"></li>
+            <li>pen's weight：<input type="range"id="size" min="1" max="100" value="50"></li>
+            <li><button id="clear_btn">clear</button></li>
+          </ul>
+          <ul>
+            <li><img src="img/haikei1.jpg" id="haikei1"alt=""><input type="button" id="btn1" value="背景１" onclick="imageDraw();"></li>
+            <li><img src="img/haikei2.jpg"
+            id="haikei2" alt=""><input type="button" id="btn2" value="背景２" onclick="imageDraw();"></li>
+            <li><img src="img/haikei3.jpg" id="haikei3" alt=""><input type="button" id="btn3" value="背景３" onclick="imageDraw();"></li>
+          </ul>
+
+        </nav>
+        <canvas id="drowarea" width="500" height="500" style="border:5px solid black;"></canvas>
+    </section>
+    </main>
+
+    <footer>
+      <copyright>
+          <div class="copyright"> Copyright &copy; 2020 weda.web. All rights reserved.
+          </div>
+        </copyright>
+
+    </footer>
+
+
+    <script src="jquery-2.1.3.min.js"></script>
+    <script>
+
+        //初期化(変数letで宣言)
+        let canvas_mouse_event = false; //スイッチ [ true=線を引く, false=線は引かない ]  ＊＊＊
+        let oldX = 0; //１つ前の座標を代入するための変数
+        let oldY = 0; //１つ前の座標を代入するための変数
+        let bold_line = "#size"; //ラインの太さをここで指定スライダー値をここに代入
+        let color = "#col"; //ラインの色をここで指定カラーピッカー値をここに代入
+        let currentColor = "#iro";
+        
+        $("#size").on("change",function(){
+            const bold_line = $(this).val();
+            ctx.lineWidth = bold_line;
+        });
+        $("#col").on("change",function(){
+            const color = $(this).val();
+            ctx.strokeStyle = color;
+        });
+        $("#iro").on("change",function(){
+            const currentColor = $(this).val();
+            ctx.fillStyle = currentColor;
+            ctx.fillRect(0,0,can.width,can.height);
+        });
+
+        //------------------------------------------------
+        const can = $("#drowarea")[0]; //CanvasElement
+        const ctx = can.getContext("2d"); //描画するための準備！
+        //------------------------------------------------
+        //背景！！
+        
+
+        //mousedown：フラグをTrue
+        $(can).on("mousedown",function(e){
+            console.log(e);
+            oldX = e.offsetX;       //MOUSEDOWNしたX横座標取得
+            oldY = e.offsetY; //MOUSEDOWN Y高さ座標取得
+            canvas_mouse_event=true;
+        })
+
+
+        //mousemove：フラグがTrueだったら描く ※e：イベント引数取得
+        //----------------------------------------------
+        $(can).on("mousemove",function(e){
+            console.log(e)
+            if(canvas_mouse_event==true){
+                  const px = e.offsetX;
+                  const py = e.offsetY;
+                  ctx.strokeStyle = color;
+                  ctx.lineWidth = bold_line;
+                  ctx.beginPath();
+                  ctx.lineJoin= "round";//丸
+                  ctx.lineCap = "round";//丸
+                  ctx.moveTo(oldX, oldY);
+                  ctx.lineTo(px, py);
+                  ctx.stroke();
+                  oldX = px;　//新しい座標を古い座標に入れ替える
+                  oldY = py;　//新しい座標を古い座標に入れ替える
+              }
+            });
+        
+        //mouseup：フラグをfalse
+        $(can).on("mouseup",function(){
+            canvas_mouse_event=false;
+        });
+        //キャンバスの外にでたらだめ
+        $(can).on("mouseout",function(){
+            canvas_mouse_event=false;
+        });
+
+        //#clear_btn：クリアーボタンAction
+        $("#clear_btn").on("click",function(){
+          ctx.beginPath();
+          ctx.clearRect(0, 0, can.width,can.height); 
+        })
+    </script>
+</body>
+
+</html>
